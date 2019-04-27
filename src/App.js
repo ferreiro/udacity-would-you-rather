@@ -10,18 +10,7 @@ import {
 import {Header} from './components/header/Header';
 import {Layout} from './components/layout/Layout';
 
-const selectQuestion = () => {
-  console.log('yay!')
-}
-
-const Question = ({question = {}}) => {
-  return (
-    <button onClick={selectQuestion}>
-      <h1>{question.text}</h1>
-    </button>
-  )
-} 
-
+import {QuestionDetailPage} from './pages/QuestionDetailPage';
 
 // <QuestionDetailPage
 // activeUser={activeUser}
@@ -29,54 +18,6 @@ const Question = ({question = {}}) => {
 // />
 
 
-const QuestionDetailPage = ({match, activeUser = {}, question = {}}) => {
-  const isAnsweredQuestion = (question = {}, activeUser = {}) => {
-    const {id: userId} = activeUser;
-    const {author: questionUserId} = question;
-
-    return userId && questionUserId && userId === questionUserId;
-  }
-
-  const isAnswered = isAnsweredQuestion(question, activeUser)
-
-  const {optionOne = {}, optionTwo = {}} = question;
-
-  const {
-    params: {
-      question_id: questionId,
-    }
-  } = match;
-
-  console.log(questionId)
-  
-  return (
-    <div>
-      <p>Question {questionId}</p>
-
-      {isAnswered === true ? (
-        <div>
-          <h1>Would You Rather</h1>
-          <ul>
-            <li>
-              <Question
-                question={optionOne}
-              />
-            </li>
-            <li>
-              <Question
-                question={optionTwo}
-              />
-            </li>
-          </ul>
-        </div>
-      ) : (
-        <div>
-
-        </div>
-      )}
-    </div>
-  )
-}
 
 const QuestionListPage = ({showAnswered}) => {
   
@@ -160,8 +101,8 @@ class App extends PureComponent {
           )} />
 
           <Route path="/create" component={withLayout(CreatePage)} />
-          <Route path="/questions" component={withLayout(QuestionsPage)} />
           <Route path="/questions/:question_id" component={withLayout(QuestionDetailPage)} />
+          <Route path="/questions" component={withLayout(QuestionsPage)} />
           <Route path="/leaderboard" component={withLayout(LeaderboardPage)} />
           <Route path="/logout" component={withLayout(LogoutPage)} />
           <Route component={withLayout(NotFoundPage)} />
