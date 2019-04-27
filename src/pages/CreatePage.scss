@@ -1,0 +1,22 @@
+.question-create {
+    &__title {
+        
+    }
+    &__intro {
+        text-align: center;
+        font-size: 3em;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    input {
+        flex: 1 1 auto;
+        padding: 1.5em;
+        text-align: center;
+        font-size: 2em;
+        margin-bottom: 2em;
+    }
+}

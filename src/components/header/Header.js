@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import './Header.scss';
 
-export const Header = ({}) => {
+export const Header = () => {
     const userName = 'Jorge Ferreiro';
     const avatar = 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111';
     const isLoggedIn = true;
@@ -32,7 +32,7 @@ export const Header = ({}) => {
             </li>
           )}
   
-          <li>
+          <li className="header__logout">
             {isLoggedIn === true ? (
               <Link to="/logout">(Logout)</Link>
             ) : (

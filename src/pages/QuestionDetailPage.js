@@ -1,10 +1,12 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Route, NavLink, Redirect } from 'react-router-dom';
+
+import './QuestionDetailPage.scss';
 
 const OPTION_A = 'a';
 const OPTION_B = 'b';
+
 
 export class Question extends PureComponent {
     render() {
@@ -62,41 +64,41 @@ export class QuestionDetailPage extends PureComponent {
                 text: 'have horrible long term memory'
             }
         },
-        users: {
-            sarahedo: {
-              id: 'sarahedo',
-              name: 'Sarah Edo',
-              avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
-              answers: {
-                "8xf0y6ziyjabvozdd253nd": 'optionOne',
-                "6ni6ok3ym7mf1p33lnez": 'optionTwo',
-                "am8ehyc8byjqgar0jgpub9": 'optionTwo',
-                "loxhs1bqm25b708cmbf3g": 'optionTwo'
-              },
-              questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
-            },
-            tylermcginnis: {
-              id: 'tylermcginnis',
-              name: 'Tyler McGinnis',
-              avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
-              answers: {
-                "vthrdm985a262al8qx3do": 'optionOne',
-                "xj352vofupe1dqz9emx13r": 'optionTwo',
-              },
-              questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
-            },
-            johndoe: {
-              id: 'johndoe',
-              name: 'John Doe',
-              avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
-              answers: {
-                "xj352vofupe1dqz9emx13r": 'optionOne',
-                "vthrdm985a262al8qx3do": 'optionTwo',
-                "6ni6ok3ym7mf1p33lnez": 'optionTwo'
-              },
-              questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
-            }
-          }
+        // users: {
+        //     sarahedo: {
+        //       id: 'sarahedo',
+        //       name: 'Sarah Edo',
+        //       avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
+        //       answers: {
+        //         "8xf0y6ziyjabvozdd253nd": 'optionOne',
+        //         "6ni6ok3ym7mf1p33lnez": 'optionTwo',
+        //         "am8ehyc8byjqgar0jgpub9": 'optionTwo',
+        //         "loxhs1bqm25b708cmbf3g": 'optionTwo'
+        //       },
+        //       questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
+        //     },
+        //     tylermcginnis: {
+        //       id: 'tylermcginnis',
+        //       name: 'Tyler McGinnis',
+        //       avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
+        //       answers: {
+        //         "vthrdm985a262al8qx3do": 'optionOne',
+        //         "xj352vofupe1dqz9emx13r": 'optionTwo',
+        //       },
+        //       questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
+        //     },
+        //     johndoe: {
+        //       id: 'johndoe',
+        //       name: 'John Doe',
+        //       avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
+        //       answers: {
+        //         "xj352vofupe1dqz9emx13r": 'optionOne',
+        //         "vthrdm985a262al8qx3do": 'optionTwo',
+        //         "6ni6ok3ym7mf1p33lnez": 'optionTwo'
+        //       },
+        //       questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
+        //     }
+        //   }
     }
 
     selectQuestion = (event) => {
@@ -121,7 +123,7 @@ export class QuestionDetailPage extends PureComponent {
         console.log(this.props);
         const {match, activeUserId, question = {}, users} = this.props;
 
-        const activeUser = users[activeUserId]
+        const activeUser = users && users[activeUserId]
 
         const isAnswered = this.isAnsweredQuestion(question, activeUser)
         const {optionOne = {}, optionTwo = {}} = question;
@@ -131,30 +133,19 @@ export class QuestionDetailPage extends PureComponent {
             } = {}
           } = match;
 
-        console.log('match');
-        console.log(match);
-
-        console.log(questionId)
-        // const questionId = '123';
-
-        console.log(question)
-        console.log(optionOne)
-        console.log(optionTwo)
-
         const authorName = 'Jorge Ferreiro';
         const authorPic = 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111';
 
         return (
-            <div>
-                <p>Question {questionId}</p>
-
+            <div className="question-detail-page">
+                <h1>Would You Rather</h1>
                 <div className="">
-                    <h1>Would You Rather</h1>
-                    <div className="">
-                        <span>Author: {authorName}</span>
-                        <img src={authorPic} />
-                    </div>
-                    <ul>
+                    <span>Author: {authorName}</span>
+                    <img src={authorPic} alt="Author" />
+                </div>
+
+                <div className="question-detail-page__wrapper">
+                    <ul className="question-detail-page__options">
                         <li>
                             <Question
                                 option={OPTION_A}

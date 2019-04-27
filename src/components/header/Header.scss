@@ -34,10 +34,13 @@
     }
 
     &__user {
-        color: #fff;
         display: flex;
         align-items: center;
         margin: 0 2em;
+
+        span {
+            color: #fff;
+        }
 
         img {
             border-radius: 100%;
@@ -47,9 +50,17 @@
     }
 
     &__create {
-        padding: 1em 1.5em;
-        background: greenyellow;
-        border-radius: 180px;
+        a {
+            background: greenyellow;
+            border-radius: 180px;
+            padding: 1em 1.5em;
+        }
+    }
+
+    &__logout {
+        a {
+            color: #fff;
+        }
     }
 }
 

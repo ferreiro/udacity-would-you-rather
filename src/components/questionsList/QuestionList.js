@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import {QuestionListCard} from './QuestionListCard';
@@ -22,7 +21,10 @@ export class QuestionList extends PureComponent {
                     const questionOwner = users[question.author];
 
                     return (
-                        <li className="question-list__item">
+                        <li
+                            className="question-list__item"
+                            key={question.id}
+                        >
                             <QuestionListCard
                                 question={question}
                                 questionOwner={questionOwner}

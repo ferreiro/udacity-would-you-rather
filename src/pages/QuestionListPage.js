@@ -47,7 +47,6 @@ export class QuestionListPage extends PureComponent {
               questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
             }
         },
-        activeUserId: 'sarahedo',
         questions: {
             "8xf0y6ziyjabvozdd253nd": {
                 id: '8xf0y6ziyjabvozdd253nd',
@@ -136,24 +135,11 @@ export class QuestionListPage extends PureComponent {
         ), [])
     )
 
-    getAnsweredQuestions = (questionsList, user) => {
-        console.log('questionsList')
-        console.log(questionsList)
-
-        console.log('(question) => activeUser.answers[question.id] !== undefined')
-
+    getAnsweredQuestions = (questionsList = [], user = {}) => {
         return questionsList.filter((question) => user.answers[question.id] !== undefined)
     }
 
-    getUnansweredQuestions = (questionsList, user) => {
-        console.log('questionsList')
-        console.log(questionsList)
-
-        console.log('activeUser')
-        console.log(user)
-
-        console.log('(question) => activeUser.answers[question.id] !== undefined')
-
+    getUnansweredQuestions = (questionsList = [], user = {}) => {
         return questionsList.filter((question) => user.answers[question.id] === undefined)
     }
 
@@ -165,10 +151,10 @@ export class QuestionListPage extends PureComponent {
             users,
         } = this.props;
 
-        console.log(questions)
+        console.log('QuestionlistPage props');
+        console.log(this.props);
 
         const questionsList = this.getQuestionsList(questions);
-        console.log(questionsList)
 
         const user = users[activeUserId];
 
@@ -176,8 +162,10 @@ export class QuestionListPage extends PureComponent {
             ? this.getAnsweredQuestions(questionsList, user)
             : this.getUnansweredQuestions(questionsList, user)
 
-        console.log(filteredQuestionsList)
-
+        //   <QuestionList
+        //     questions={filteredQuestionsList}
+        //     users={users}
+        //  />
         return (
             <div>
                 {showAnsweredQuestions === true ? (
@@ -186,10 +174,7 @@ export class QuestionListPage extends PureComponent {
                     <h1>Unanswered questions</h1>
                 )}
 
-                <QuestionList
-                    questions={filteredQuestionsList}
-                    users={users}
-                />
+
             </div>
         )
     }  
