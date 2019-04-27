@@ -1,4 +1,6 @@
 import React, {PureComponent} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+
 import './App.css';
 
 import {
@@ -6,7 +8,7 @@ import {
   _getUsers
 } from './_DATA';
 import {Header} from './components/header/Header';
-
+import {Layout} from './components/layout/Layout';
 
 const selectQuestion = () => {
   console.log('yay!')
@@ -20,7 +22,14 @@ const Question = ({question = {}}) => {
   )
 } 
 
-const QuestionDetailPage = ({activeUser = {}, question = {}}) => {
+
+// <QuestionDetailPage
+// activeUser={activeUser}
+// question={question}
+// />
+
+
+const QuestionDetailPage = ({match, activeUser = {}, question = {}}) => {
   const isAnsweredQuestion = (question = {}, activeUser = {}) => {
     const {id: userId} = activeUser;
     const {author: questionUserId} = question;
@@ -31,9 +40,19 @@ const QuestionDetailPage = ({activeUser = {}, question = {}}) => {
   const isAnswered = isAnsweredQuestion(question, activeUser)
 
   const {optionOne = {}, optionTwo = {}} = question;
+
+  const {
+    params: {
+      question_id: questionId,
+    }
+  } = match;
+
+  console.log(questionId)
   
   return (
     <div>
+      <p>Question {questionId}</p>
+
       {isAnswered === true ? (
         <div>
           <h1>Would You Rather</h1>
@@ -66,6 +85,26 @@ const QuestionListPage = ({showAnswered}) => {
   )
 }
 
+const CreatePage = ({}) => (
+  <div>Create page</div>
+)
+
+const QuestionsPage = ({}) => (
+  <div>Questions page</div>
+)
+
+const LeaderboardPage = ({}) => (
+  <div>Leaderboard page</div>
+)
+
+const LogoutPage = ({}) => (
+  <p>Logging out!</p>
+)
+
+const NotFoundPage = ({}) => (
+  <p>Not found!</p>
+)
+
 class App extends PureComponent {
   // TODO: Move into a global state
   state = {
@@ -94,19 +133,40 @@ class App extends PureComponent {
     const question = questions['8xf0y6ziyjabvozdd253nd']
     const activeUser = users['sarahedo']
 
-    return (
-      <div className="App">
-        <Header />
-        <QuestionDetailPage
-          activeUser={activeUser}
-          question={question}
-        />
+    const withLayout = (WrappedComponent) => {
+      class ComponentWithLayout extends PureComponent {
+        render = () => (
+            <Layout>
+              <WrappedComponent />
+            </Layout>
+          )
+      }
 
-        <QuestionListPage
-          questions={questions}
-          showAnswered={showAnswered}
-        />
-      </div>
+      return ComponentWithLayout;
+    }
+
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" render={() => (
+            <div className="App">
+              <Header />
+
+              <QuestionListPage
+                questions={questions}
+                showAnswered={showAnswered}
+              />
+            </div>
+          )} />
+
+          <Route path="/create" component={withLayout(CreatePage)} />
+          <Route path="/questions" component={withLayout(QuestionsPage)} />
+          <Route path="/questions/:question_id" component={withLayout(QuestionDetailPage)} />
+          <Route path="/leaderboard" component={withLayout(LeaderboardPage)} />
+          <Route path="/logout" component={withLayout(LogoutPage)} />
+          <Route component={withLayout(NotFoundPage)} />
+        </Switch>
+      </Router>
     )
   };
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom'
 import './Header.scss';
 
 export const Header = ({}) => {
@@ -14,13 +14,13 @@ export const Header = ({}) => {
         </h1>
   
         <ul className="header__menu">
-          <li><a href="/">Questions</a></li>
-          <li><a href="/leaderboard">Leaderboard</a></li>
+          <li><Link to="/">Questions</Link></li>
+          <li><Link to="/leaderboard">Leaderboard</Link></li>
         </ul>
   
         <ul className="header__actions">
           <li className="header__create">
-            <a href="/create">New question</a>
+            <Link to="/create">New question</Link>
           </li>
   
           {isLoggedIn && (
@@ -32,9 +32,9 @@ export const Header = ({}) => {
   
           <li>
             {isLoggedIn === true ? (
-              <a href="/logout">(Logout)</a>
+              <Link to="/logout">(Logout)</Link>
             ) : (
-              <a href="/login">(Login)</a>
+              <Link to="/login">(Login)</Link>
             )}
           </li>
         </ul>
