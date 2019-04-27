@@ -1,20 +1,20 @@
 import {fetchUsers} from '../api/users';
 
-export const GET_USERS_REQUEST = 'get-users/requesting';
-export const GET_USERS_SUCCESS = 'get-users/success';
-export const GET_USERS_FAILURE = 'get-users/failure';
+export const LOAD_USERS_REQUEST = 'get-users/requesting';
+export const LOAD_USERS_SUCCESS = 'get-users/success';
+export const LOAD_USERS_FAILURE = 'get-users/failure';
 
-export const requestUsers = () => ({
-    type: GET_USERS_REQUEST,
+const requestUsers = () => ({
+    type: LOAD_USERS_REQUEST,
 })
 
-export const loadUsersSuccess = (users) => ({
-    type: GET_USERS_SUCCESS,
+const loadUsersSuccess = (users) => ({
+    type: LOAD_USERS_SUCCESS,
     payload: users
 })
 
-export const loadUsersFailure = (error) => ({
-    type: GET_USERS_FAILURE,
+const loadUsersFailure = (error) => ({
+    type: LOAD_USERS_FAILURE,
     payload: error
 })
 

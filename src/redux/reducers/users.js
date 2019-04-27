@@ -1,7 +1,7 @@
 import {
-    GET_USERS_REQUEST,
-    GET_USERS_SUCCESS,
-    GET_USERS_FAILURE
+    LOAD_USERS_REQUEST,
+    LOAD_USERS_SUCCESS,
+    LOAD_USERS_FAILURE
 } from '../actions/users';
 
 const initialState = {
@@ -12,11 +12,11 @@ const initialState = {
 
 export default (state = initialState, {type, payload}) => {
     switch (type) {
-        case GET_USERS_REQUEST:
+        case LOAD_USERS_REQUEST:
             return {...state, isLoading: true}
-        case GET_USERS_SUCCESS:
+        case LOAD_USERS_SUCCESS:
             return {...state, isLoading: false, items: payload} 
-        case GET_USERS_FAILURE:
+        case LOAD_USERS_FAILURE:
             return {...state, isLoading: false, error: payload}
         default:
             return state;

@@ -7,12 +7,35 @@ export class QuestionListPage extends PureComponent {
     static propTypes = {
         displayAnsweredQuestions: PropTypes.bool.isRequired,
         activeUser: PropTypes.object,
-        questions: PropTypes.object,
+        questions: PropTypes.object.isRequired,
     }
 
     static defaultProps = {
-      users: {},
-      questions: {}
+      users: {}
+    }
+
+    state = {
+      isLoading: true,
+    }
+
+    componentDidMount() {
+      Promise.all([
+        this.props.loadQuestions(),
+        this.props.loadUsers()
+      ]).then(([questions, users]) => {
+        console.log('Loaded!', questions, users)
+      }).catch((error) => {
+        console.log('errors... :(', error)
+      }).finally(() => {
+        this.setState({isLoading: false})
+      })
+      
+
+      // this.props.loadQuestions().then(() => {
+      //   this.props.loadUsers().then(() => {
+      //     this.setState({isLoading: false})
+      //   })
+      // })
     }
 
     getQuestionsList = (questions = {}) => (
@@ -22,11 +45,11 @@ export class QuestionListPage extends PureComponent {
     )
 
     getAnsweredQuestions = (questionsList = [], user = {}) => {
-        return questionsList.filter((question) => user.answers[question.id] !== undefined)
+        return questionsList.filter((question) => user && user.answers && user.answers[question.id] !== undefined)
     }
 
     getUnansweredQuestions = (questionsList = [], user = {}) => {
-        return questionsList.filter((question) => user.answers[question.id] === undefined)
+        return questionsList.filter((question) => user && user.answers && user.answers[question.id] === undefined)
     }
 
     _handleOnShowUnanswered = () => {
@@ -41,32 +64,21 @@ export class QuestionListPage extends PureComponent {
     }
 
     render() {
-        const {
-            activeUserId,
-            displayAnsweredQuestions,
-            questions,
-            users,
-        } = this.props;
-
-        if (!questions || questions.length === 0) {
-          return null;
+        if (this.state.isLoading === true) {
+          return <p>Is loading...</p>
         }
 
-        console.log('QuestionlistPage props');
-        console.log(this.props);
+        const {activeUser, displayAnsweredQuestions, questions, users} = this.props;
+
+        if (questions.length === 0) {
+          return <p>Empty</p>
+        }
 
         const questionsList = this.getQuestionsList(questions);
-
-        const user = users[activeUserId];
-
         const filteredQuestionsList = displayAnsweredQuestions === true
-            ? this.getAnsweredQuestions(questionsList, user)
-            : this.getUnansweredQuestions(questionsList, user)
+            ? this.getAnsweredQuestions(questionsList, activeUser)
+            : this.getUnansweredQuestions(questionsList, activeUser)
 
-        //   <QuestionList
-        //     questions={filteredQuestionsList}
-        //     users={users}
-        //  />
         return (
             <div>
                 {displayAnsweredQuestions === true ? (
@@ -81,7 +93,10 @@ export class QuestionListPage extends PureComponent {
                   </div>
                 )}
 
-
+                <QuestionList
+                  questions={filteredQuestionsList}
+                  users={users}
+                />
             </div>
         )
     }  

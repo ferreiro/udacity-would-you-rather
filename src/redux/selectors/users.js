@@ -5,7 +5,7 @@ export const getUsers = (state = {}) => (
 )
 
 export const getIsLoadingUsers = (state) => (
-    get(state, 'users.isLoading')
+    get(state, 'users.isLoading', false)
 )
 
 // TODO
