@@ -1,0 +1,12 @@
+.question-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+
+    &__item {
+        width: 33.33%;
+        flex: 1 1 auto;
+        list-style: none;
+    }
+}

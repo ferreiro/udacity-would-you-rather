@@ -10,7 +10,9 @@ export const Header = ({}) => {
     return (
       <header className="header">
         <h1 className="header__logo">
-            WYR
+            <Link to="/">
+                WYR
+            </Link>
         </h1>
   
         <ul className="header__menu">

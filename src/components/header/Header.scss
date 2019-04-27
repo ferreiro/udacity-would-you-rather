@@ -5,8 +5,11 @@
     padding: .5em 1.5em;
 
     &__logo {
-        color: #fff;
         flex: 0 0 auto;
+
+        a {
+            color: #fff;
+        }
     }
 
     &__menu {

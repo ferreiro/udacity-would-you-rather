@@ -1,0 +1,53 @@
+.question-card {
+    a {
+        border: 2px solid #cecece;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        margin: 1em;
+        padding: 2em;
+    }
+
+    &__author {
+        max-width: 55%;
+        border-radius: 60px;
+        border: 1px solid #cecece;
+        align-items: center;
+        display: inline-flex;
+
+        img {
+            height: 40px;
+            border-radius: 100%;
+            margin-right: 1em;
+        }
+    }
+
+    &__title {
+        font-size: 1em;
+        text-align: center;
+        margin-top: 2em;
+    }
+
+    &__options {
+        align-items: center; 
+        display: flex;
+        margin: 0;
+        padding: 0;
+
+        li {
+            border-radius: 5px;
+            flex: 1 1 auto;
+            list-style: none;
+            text-align: center;
+            padding: 1em;
+
+            &:nth-child(1) {
+                background: blue;
+            }
+
+            &:nth-child(3) {
+                background: red;
+            }
+        }
+    }
+}
