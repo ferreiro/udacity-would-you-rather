@@ -49,21 +49,24 @@ export class QuestionDetailPage extends PureComponent {
         users: PropTypes.object,
     }
 
+    state = {
+        isLoading: true,
+    }
+  
     static defaultProps = {
-        activeUserId: 'sarahedo',
-        question: {
-            id: '8xf0y6ziyjabvozdd253nd',
-            author: 'sarahedo',
-            timestamp: 1467166872634,
-            optionOne: {
-                votes: ['sarahedo'],
-                text: 'have horrible short term memory',
-            },
-            optionTwo: {
-                votes: [],
-                text: 'have horrible long term memory'
-            }
-        },
+        // question: {
+        //     id: '8xf0y6ziyjabvozdd253nd',
+        //     author: 'sarahedo',
+        //     timestamp: 1467166872634,
+        //     optionOne: {
+        //         votes: ['sarahedo'],
+        //         text: 'have horrible short term memory',
+        //     },
+        //     optionTwo: {
+        //         votes: [],
+        //         text: 'have horrible long term memory'
+        //     }
+        // },
         // users: {
         //     sarahedo: {
         //       id: 'sarahedo',
@@ -101,6 +104,17 @@ export class QuestionDetailPage extends PureComponent {
         //   }
     }
 
+    componentDidMount() {
+        this.setState({isLoading: true})
+        this.props.loadInitialData().then(() => {
+            console.log('finalized loading!')
+        }).catch(() => {
+            console.log('error loading :(')
+        }).finally(() => {
+            this.setState({isLoading: false})
+        })
+    }
+
     selectQuestion = (event) => {
         console.log('Select question!!!')
         console.log(event)
@@ -112,15 +126,14 @@ export class QuestionDetailPage extends PureComponent {
         const {id: userId} = activeUser;
         const {author: questionUserId} = question;
 
-        console.log('isAnsweredQuestion');
-        console.log(userId);
-        console.log(questionUserId);
-    
         return userId && questionUserId && userId === questionUserId;
     }
 
     render() {
-        console.log(this.props);
+        if (this.state.isLoading) {
+            return <p>Is loading...</p>
+        }
+
         const {match, activeUserId, question = {}, users} = this.props;
 
         const activeUser = users && users[activeUserId]

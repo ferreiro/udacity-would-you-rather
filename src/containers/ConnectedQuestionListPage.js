@@ -4,9 +4,8 @@ import {QuestionListPage} from '../pages/QuestionListPage';
 import { getDisplayAnsweredQuestions } from '../redux/selectors/settings';
 import { displayAnsweredQuestions, displayUnansweredQuestions } from '../redux/actions/settings';
 import { getUsers, getIsLoadingUsers, getActiveUser } from '../redux/selectors/users';
-import { loadUsers } from '../redux/actions/users';
-import { loadQuestions } from '../redux/actions/questions';
 import { getQuestions, getIsLoadingQuestions } from '../redux/selectors/questions';
+import { loadListPageInitialData } from '../redux/actions/initialData';
 
 const mapStateToProps = (state) => {
     console.log('ConnectedQuestionlistPage');
@@ -22,8 +21,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    loadUsers,
-    loadQuestions,
+    loadInitialData: loadListPageInitialData,
     onDisplayAnsweredQuestions: displayAnsweredQuestions,
     onDisplayUnansweredQuestions: displayUnansweredQuestions,
 }

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import {QuestionList} from '../components/questionsList/QuestionList';
 
+// import Loading from '../public/loading.svg';
+
 export class QuestionListPage extends PureComponent {
     static propTypes = {
         displayAnsweredQuestions: PropTypes.bool.isRequired,
@@ -19,23 +21,14 @@ export class QuestionListPage extends PureComponent {
     }
 
     componentDidMount() {
-      Promise.all([
-        this.props.loadQuestions(),
-        this.props.loadUsers()
-      ]).then(([questions, users]) => {
-        console.log('Loaded!', questions, users)
-      }).catch((error) => {
-        console.log('errors... :(', error)
+      this.setState({isLoading: true})
+      this.props.loadInitialData().then(() => {
+        console.log('finalized loading!')
+      }).catch(() => {
+        console.log('error loading :(')
       }).finally(() => {
         this.setState({isLoading: false})
       })
-      
-
-      // this.props.loadQuestions().then(() => {
-      //   this.props.loadUsers().then(() => {
-      //     this.setState({isLoading: false})
-      //   })
-      // })
     }
 
     getQuestionsList = (questions = {}) => (
@@ -65,7 +58,7 @@ export class QuestionListPage extends PureComponent {
 
     render() {
         if (this.state.isLoading === true) {
-          return <p>Is loading...</p>
+          return <p>Loading...</p>
         }
 
         const {activeUser, displayAnsweredQuestions, questions, users} = this.props;
