@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux';
+import {isEmpty, get} from 'lodash';
 
 import {loadUsers} from './redux/actions/users';
 
@@ -20,6 +21,10 @@ const LeaderboardPage = () => (
     <div>Leaderboard page</div>
 )
 
+const LoginPage = () => (
+    <p>Sign in</p>
+)
+
 const LogoutPage = () => (
     <p>Logging out!</p>
 )
@@ -27,51 +32,83 @@ const LogoutPage = () => (
 const NotFoundPage = () => (
     <p>Not found!</p>
 )
+
+const withRequiredAuthentication = (WrappedComponent) => {
+    class ComponentWithLayout extends PureComponent {
+        render() {
+            // const {activeUser} = this.props;
+            // const currentUrl = get(this.props.history, 'location.pathname', '')
+
+            // if (!activeUser || isEmpty(activeUser)) {
+            //     return <Redirect to={`/login?redirectTo=${currentUrl}`} />
+            // }
+
+            // return (
+            //     <WrappedComponent
+            //         {...this.props}
+            //     />
+            // )
+
+            return (
+                <WrappedComponent
+                    {...this.props}
+                />
+            )
+        }
+    }
+
+    return ComponentWithLayout;
+}
   
 const withLayout = (WrappedComponent) => {
     class ComponentWithLayout extends PureComponent {
-        componentDidMount() {
-            this.props.loadInitialData()
-        }
-
         render = () => (
             <Layout>
                 <WrappedComponent
-                {...this.props}
+                    {...this.props}
                 />
             </Layout>
         )
     }
 
-    const mapStateToProps = (store) => ({
-        users: getUsers(store),
-        questions: store.questions,
-        activeUser: getActiveUser(store)
-    })
-    
-    const mapDispatchToProps = (dispatch) => ({
-        loadInitialData: () => {
-            dispatch(loadUsers())
-        }
-    })
-
-    return connect(
-        mapStateToProps,
-        mapDispatchToProps,
-    )(ComponentWithLayout);
+    return ComponentWithLayout;
 }
 
 // NB: You can pass extra props to this
 export const getRoutes = ({props}) => (
     <Router>
         <Switch>
-            <Route exact path="/" component={withLayout(ConnectedQuestionListPage)} />
-            <Route path="/create" component={withLayout(CreatePage)} />
-            <Route path="/questions/:id" component={withLayout(ConnectedQuestionDetailPage)} />
-            <Route path="/questions" component={withLayout(QuestionsPage)} />
-            <Route path="/leaderboard" component={withLayout(LeaderboardPage)} />
-            <Route path="/logout" component={withLayout(LogoutPage)} />
-            <Route component={withLayout(NotFoundPage)} />
+            <Route
+                exact path="/"
+                component={withRequiredAuthentication(withLayout(ConnectedQuestionListPage))}
+            />
+            <Route
+                path="/create"
+                component={withRequiredAuthentication(withLayout(CreatePage))}
+            />
+            <Route
+                path="/questions/:id"
+                component={withRequiredAuthentication(withLayout(ConnectedQuestionDetailPage))}
+            />
+            <Route
+                path="/questions"
+                component={withRequiredAuthentication(withLayout(QuestionsPage))}
+            />
+            <Route
+                path="/leaderboard"
+                component={withRequiredAuthentication(withLayout(LeaderboardPage))}
+            />
+            <Route
+                path="/login"
+                component={withLayout(LoginPage)}
+            />
+            <Route
+                path="/logout"
+                component={withLayout(LogoutPage)}
+            />
+            <Route
+                component={withLayout(NotFoundPage)}
+            />
         </Switch>
     </Router>
 );

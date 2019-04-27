@@ -1,15 +1,12 @@
 import {get} from 'lodash';
 
-export const getUsers = (state = {}) => {
-    console.log('getUsers');
-    console.log(state);
-    
-    return get(state, 'users.items', {})
-}
+export const getUsers = (state = {}) => (
+    get(state, 'users.items', {})
+)
 
-export const getIsLoadingUsers = (state) => {
+export const getIsLoadingUsers = (state) => (
     get(state, 'users.isLoading')
-}
+)
 
 // TODO
 export const getActiveUser = (state) => {
