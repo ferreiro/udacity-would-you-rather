@@ -39,7 +39,7 @@ export class Header extends PureComponent {
         <ul className="header__actions">
           {isLoggedIn && (
             <li className="header__create">
-              <Link to="/create">New question</Link>
+              <Link to="/add">New question</Link>
             </li>
           )}
 

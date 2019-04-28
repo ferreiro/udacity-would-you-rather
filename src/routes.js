@@ -15,10 +15,6 @@ const QuestionsPage = () => (
     <div>Questions page</div>
 )
 
-const LogoutPage = () => (
-    <p>Logging out!</p>
-)
-
 const NotFoundPage = () => (
     <p>Not found!</p>
 )
@@ -86,7 +82,7 @@ export const getRoutes = ({props}) => (
                 component={withRequiredAuthentication(withLayout(ConnectedQuestionListPage))}
             />
             <Route
-                path="/create"
+                path="/add"
                 component={withRequiredAuthentication(withLayout(ConnectedCreatePage))}
             />
             <Route
@@ -104,10 +100,6 @@ export const getRoutes = ({props}) => (
             <Route
                 path="/login"
                 component={withLayout(ConnectedLoginPage)}
-            />
-            <Route
-                path="/logout"
-                component={withLayout(LogoutPage)}
             />
             <Route
                 component={withLayout(NotFoundPage)}

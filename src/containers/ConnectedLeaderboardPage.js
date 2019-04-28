@@ -5,9 +5,6 @@ import {LeaderboardPage} from '../pages/LeaderboardPage'
 import { getUsers, getIsLoadingUsers } from '../redux/selectors/users';
 
 const mapStateToProps = (state) => {
-    console.log('Leadership Board Page: state')
-    console.log(state)
-    
     return {
         activeUserId: state.activeUserId,
         users: getUsers(state),

@@ -2,6 +2,9 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {isEmpty, size, sortBy, reverse} from 'lodash';
 
+import './LeaderboardPage.scss';
+
+
 export class LeaderboardPage extends PureComponent {
     static propTypes = {
         // displayAnsweredQuestions: PropTypes.bool.isRequired,
@@ -33,9 +36,6 @@ export class LeaderboardPage extends PureComponent {
           ...{points: size(user.answers) + size(user.questions)}
         }
 
-        console.log('updatedUser')
-        console.log(updatedUser)
-
         return updatedUser
       })
 
@@ -53,35 +53,36 @@ export class LeaderboardPage extends PureComponent {
           return <p>No users :)</p>
         }
 
-        console.group('Leaderboard')
-        console.log(users)
         const usersList = this.getUsersList(users)
-        console.groupEnd(usersList)
-
 
         return (
             <div>
                 <div style={{textAlign: "center"}}>
                     <h1>Leaderboard</h1>
 
-                    <ul>
+                    <ul className="leaderboard">
                       {usersList.map((user) => {
                         const answeredQuestions = size(user.answers)
                         const createdQuestions = size(user.questions)
                 
                         return (
-                          <li key={user.id}>
-                            <p>{user.name}</p>
+                          <li key={user.id} className="leaderboard__item">
                             <img src={user.avatarURL} alt="Avatar" />
-                            <p>
-                              Answered questions: {answeredQuestions}
-                            </p>
-                            <p>
-                              Created Questions: {createdQuestions}
-                            </p>
-                            <p>
-                              Points: {user.points}
-                            </p>
+                            <p className="leaderboard__title">{user.name}</p>
+
+                            <div className="leaderboard__data">
+                              <p>
+                                Answered questions: {answeredQuestions}
+                              </p>
+                              <p>
+                                Created Questions: {createdQuestions}
+                              </p>
+                            </div>
+
+                            <div className="leaderboard__points">
+                              <span>Points</span>
+                              <span className="points">{user.points}</span>
+                            </div>
                           </li>
                         )
                       })}

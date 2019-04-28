@@ -1,0 +1,58 @@
+.leaderboard {
+    display: flex;
+    flex-direction: column;
+
+    &__item {
+        align-items: center;
+        display: flex;
+        margin-bottom: 2em;
+        border: 2px solid #cecece;
+        border-radius: 10px;
+        list-style: none;
+        flex-direction: row;
+        padding: 2em;
+
+        img {
+            width: 120px;
+            height: 120px;
+            border-radius: 100%;
+        }
+
+
+        p {
+
+        }
+        span {
+
+        }
+    }
+
+    &__title {
+        min-width: 200px;
+        font-size: 2em;
+        margin-left: 2em;
+        margin-right: 2em;
+        text-align: left;
+    }
+
+    &__data {
+        flex: 1 1 auto;
+        text-align: left;
+    }
+
+    &__points {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        border: 1px solid #cecece;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .points {
+            font-size: 2em;
+        }
+    }
+}
