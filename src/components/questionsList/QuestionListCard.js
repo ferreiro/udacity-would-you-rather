@@ -2,6 +2,8 @@ import React, {PureComponent} from 'react';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
+import {Author} from '../author/Author';
+
 import './QuestionListCard.scss';
 
 export class QuestionListCard extends PureComponent {
@@ -15,10 +17,9 @@ export class QuestionListCard extends PureComponent {
         return (
             <div className={wrapperClassname}>
                 <Link to={`/questions/${question.id}`}>
-                    <div className="question-card__author">
-                        <img src={questionOwner.avatarURL} alt="Avatar" />
-                        {questionOwner.name}
-                    </div>
+                    <Author
+                        author={questionOwner}
+                    />
 
                     <h3 className="question-card__title">
                         Would you rather

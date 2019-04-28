@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import {isEmpty} from 'lodash';
 
 import {QuestionList} from '../components/questionsList/QuestionList';
 
@@ -21,14 +22,18 @@ export class QuestionListPage extends PureComponent {
     }
 
     componentDidMount() {
-      this.setState({isLoading: true})
-      this.props.loadInitialData().then(() => {
-        console.log('finalized loading!')
-      }).catch(() => {
-        console.log('error loading :(')
-      }).finally(() => {
-        this.setState({isLoading: false})
-      })
+      if (isEmpty(this.props.questions) || isEmpty(this.props.users)) {
+        this.setState({isLoading: true});
+        this.props.loadInitialData().then(() => {
+
+        }).catch(() => {
+
+        }).finally(() => {
+            this.setState({isLoading: false})
+        })
+      } else {
+          this.setState({isLoading: false})
+      }
     }
 
     getQuestionsList = (questions = {}) => (
@@ -75,12 +80,12 @@ export class QuestionListPage extends PureComponent {
         return (
             <div>
                 {displayAnsweredQuestions === true ? (
-                  <div>
+                  <div style={{textAlign: "center"}}>
                     <h1>Answered questions</h1>
                     <button onClick={this._handleOnShowUnanswered}>Show Unanswered</button>
                   </div>
                 ) : (
-                  <div>
+                  <div style={{textAlign: "center"}}>
                     <h1>Unanswered questions</h1>
                     <button onClick={this._handleOnShowAnswered}>Show Answered</button>
                   </div>

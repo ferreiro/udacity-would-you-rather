@@ -1,47 +1,15 @@
 import React, {PureComponent} from 'react';
+import {Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import {isEmpty, get} from 'lodash';
+
+import {Author} from '../components/author/Author';
+import {Question} from '../components/question/Question';
+import {OPTION_ONE, OPTION_TWO} from '../components/question/Question';
 
 import './QuestionDetailPage.scss';
 
-const OPTION_A = 'a';
-const OPTION_B = 'b';
 
-
-export class Question extends PureComponent {
-    render() {
-        const {option, onSelectQuestion, question} = this.props;
-
-        const wrapperClassname = classNames(
-            'question-option',
-            {'question-option__a': (option === OPTION_A)},
-            {'question-option__b': (option === OPTION_B)},
-        );
-
-        return (
-            <div className={wrapperClassname}>
-                <button
-                    className="question-option"
-                    onClick={onSelectQuestion}
-                >
-                    <h1>{question.text}</h1>
-                </button>
-
-                <div className="question-option__results">
-                    <span style={{
-                        width: '50%',
-                        height: '20px',
-                        display: 'block',
-                        borderRadius: '60px',
-                        backgroundColor: 'red'
-                    }}></span>
-                    <span>1 of 2 questions</span>
-                </div>
-            </div>
-        )
-    }
-}
-  
 export class QuestionDetailPage extends PureComponent {
     static propTypes = {
         activeUserId: PropTypes.string,
@@ -54,65 +22,21 @@ export class QuestionDetailPage extends PureComponent {
     }
   
     static defaultProps = {
-        // question: {
-        //     id: '8xf0y6ziyjabvozdd253nd',
-        //     author: 'sarahedo',
-        //     timestamp: 1467166872634,
-        //     optionOne: {
-        //         votes: ['sarahedo'],
-        //         text: 'have horrible short term memory',
-        //     },
-        //     optionTwo: {
-        //         votes: [],
-        //         text: 'have horrible long term memory'
-        //     }
-        // },
-        // users: {
-        //     sarahedo: {
-        //       id: 'sarahedo',
-        //       name: 'Sarah Edo',
-        //       avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
-        //       answers: {
-        //         "8xf0y6ziyjabvozdd253nd": 'optionOne',
-        //         "6ni6ok3ym7mf1p33lnez": 'optionTwo',
-        //         "am8ehyc8byjqgar0jgpub9": 'optionTwo',
-        //         "loxhs1bqm25b708cmbf3g": 'optionTwo'
-        //       },
-        //       questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
-        //     },
-        //     tylermcginnis: {
-        //       id: 'tylermcginnis',
-        //       name: 'Tyler McGinnis',
-        //       avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
-        //       answers: {
-        //         "vthrdm985a262al8qx3do": 'optionOne',
-        //         "xj352vofupe1dqz9emx13r": 'optionTwo',
-        //       },
-        //       questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
-        //     },
-        //     johndoe: {
-        //       id: 'johndoe',
-        //       name: 'John Doe',
-        //       avatarURL: 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111',
-        //       answers: {
-        //         "xj352vofupe1dqz9emx13r": 'optionOne',
-        //         "vthrdm985a262al8qx3do": 'optionTwo',
-        //         "6ni6ok3ym7mf1p33lnez": 'optionTwo'
-        //       },
-        //       questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
-        //     }
-        //   }
     }
 
     componentDidMount() {
-        this.setState({isLoading: true})
-        this.props.loadInitialData().then(() => {
-            console.log('finalized loading!')
-        }).catch(() => {
-            console.log('error loading :(')
-        }).finally(() => {
+        if (isEmpty(this.props.questions) || isEmpty(this.props.users)) {
+            this.setState({isLoading: true});
+            this.props.loadInitialData().then(() => {
+
+            })
+            .catch(() => {})
+            .finally(() => {
+                this.setState({isLoading: false})
+            })
+        } else {
             this.setState({isLoading: false})
-        })
+        }
     }
 
     selectQuestion = (event) => {
@@ -122,11 +46,17 @@ export class QuestionDetailPage extends PureComponent {
         // else, dispatch new vote!
     }
 
-    isAnsweredQuestion = (question = {}, activeUser = {}) => {
-        const {id: userId} = activeUser;
-        const {author: questionUserId} = question;
+    getUserAnswered = (question, activeUser) => {
+        const {id: questionId} = question;
+        const answer = activeUser.answers[questionId] || null;
 
-        return userId && questionUserId && userId === questionUserId;
+        return answer;
+    }
+
+    hasAnsweredQuestion = (question, activeUser) => {
+        const {id: questionId} = question;
+
+        return activeUser.answers[questionId] !== undefined;
     }
 
     render() {
@@ -134,52 +64,60 @@ export class QuestionDetailPage extends PureComponent {
             return <p>Is loading...</p>
         }
 
-        const {match, activeUserId, question = {}, users} = this.props;
+        const {activeUser, questions, users} = this.props;
 
-        const activeUser = users && users[activeUserId]
+        if (!activeUser || !questions || !users) {
+            return <p>No message found</p>
+        }
+        
+        const questionId = get(this.props.match, 'params.id', null);
+        const question = questions[questionId];
 
-        const isAnswered = this.isAnsweredQuestion(question, activeUser)
+        if (!questionId || !question) {
+            return <Redirect to="/404" />
+        }
+
         const {optionOne = {}, optionTwo = {}} = question;
-        const {
-            params: {
-                id: questionId,
-            } = {}
-          } = match;
+        const author = users[question.author];
+        const totalVotes = optionOne.votes.length + optionTwo.votes.length
 
-        const authorName = 'Jorge Ferreiro';
-        const authorPic = 'http://creativeedtech.weebly.com/uploads/4/1/6/3/41634549/published/avatar.png?1487742111';
+        const userAnswered = this.getUserAnswered(question, activeUser)
+        const hasAnswered = userAnswered !== null
 
         return (
             <div className="question-detail-page">
+
+                <Author
+                    author={author}
+                />
+
                 <h1>Would You Rather</h1>
-                <div className="">
-                    <span>Author: {authorName}</span>
-                    <img src={authorPic} alt="Author" />
-                </div>
 
                 <div className="question-detail-page__wrapper">
                     <ul className="question-detail-page__options">
                         <li>
                             <Question
-                                option={OPTION_A}
+                                option={OPTION_ONE}
                                 question={optionOne}
                                 onSelectQuestion={this.selectQuestion}
+                                isSelected={true}
+                                totalVotes={totalVotes}
+                                hasAnswered={hasAnswered}
+                                userAnswered={userAnswered}
                             />
                         </li>
                         <li>
                             <Question
-                                option={OPTION_B}
+                                option={OPTION_TWO}
                                 question={optionTwo}
                                 onSelectQuestion={this.selectQuestion}
+                                isSelected={false}
+                                totalVotes={totalVotes}
+                                hasAnswered={hasAnswered}
+                                userAnswered={userAnswered}
                             />
                         </li>
                     </ul>
-
-                    {isAnswered === true && (
-                        <div>
-                            
-                        </div>
-                    )}
                 </div>
             </div>
         )

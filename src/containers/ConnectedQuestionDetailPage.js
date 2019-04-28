@@ -14,8 +14,7 @@ const mapStateToProps = (state) => {
     
     return ({
         activeUser: getActiveUser(state),
-        // users: getUsers(state),
-        displayAnsweredQuestions: getDisplayAnsweredQuestions(state),
+        users: getUsers(state),
         questions: getQuestions(state),
         isLoading: getIsLoadingQuestions(state) && getIsLoadingUsers(state)
     })

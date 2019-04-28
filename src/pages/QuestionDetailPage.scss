@@ -1,14 +1,15 @@
 .question-detail-page {
+    padding-top: 1em; 
     &__wrapper {
-        background: blue;
         position: fixed;
         left: 0;
         right: 0;
-        top: 270px;
+        top: 250px;
         bottom: 0;
     }
 
     &__options {
+        height: 100%;
         align-items: center;
         align-content: center;
         width: 100%;
@@ -20,6 +21,7 @@
         padding: 0;
 
         li {
+            width: 50%;
             flex: 1 1 auto;
             list-style: none;
             height: 100%;

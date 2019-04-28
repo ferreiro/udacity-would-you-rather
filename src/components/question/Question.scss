@@ -1,0 +1,109 @@
+.question-option {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &--disabled {
+        button,
+        button:hover {
+            opacity: 0.2;
+            cursor: not-allowed;
+            border-width: 30px;
+        }
+
+        .question-option__a,
+        .question-option__a:hover {
+            background: #780010 !important;
+        }
+        .question-option__b,
+        .question-option__b:hover {
+            background: #005088 !important;
+        }
+    }
+
+    &--selected {
+        button {
+            opacity: 1 !important;
+            border-width: 80px;
+
+            &:hover {
+                border-width: 80px;
+                background: initial;
+            }
+        }
+
+        .question-option__a,
+        .question-option__a:hover {
+            background: #780010 !important;
+        }
+        .question-option__b,
+        .question-option__b:hover {
+            background: #005088 !important;
+        }
+    }
+
+    &--no-answered {
+        .question-option__a {
+            background: #ee0021;
+    
+            &:hover {
+                background: #780010;
+            }
+        }
+    
+        .question-option__b {
+            background: #0086e2;
+    
+            &:hover {
+                background: #005088;
+            }
+        }
+    }
+
+    &__item {
+        cursor: pointer;
+        flex: 1 1 auto;
+        border: 0;
+        outline: 0;
+        border: 30px double white;
+        transition: all 0.2s;
+
+        &--disabled {
+            cursor: disabled;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 3em;
+            text-transform: capitalize;
+        }
+
+        &:hover {
+            border-width: 50px;
+            // background: #f4f4f4;
+        }
+    }
+
+    &__results {
+        padding: 2em;
+        text-align: center;
+
+        span {
+            margin: 0 auto;
+        }
+    }
+
+    &__percentage {
+        max-width: 60%;
+        height: 20px;
+        display: block;
+        border-radius: 60px;
+        background: #cecece;
+        margin: 0 auto;
+    }
+
+    &__votes {
+        display: block;
+        margin-top: 1em;
+    }
+}
