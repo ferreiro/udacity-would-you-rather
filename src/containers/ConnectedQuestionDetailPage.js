@@ -1,4 +1,3 @@
-import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 
 import {QuestionDetailPage} from '../pages/QuestionDetailPage';
@@ -8,9 +7,7 @@ import { getQuestions, getIsLoadingQuestions } from '../redux/selectors/question
 import { loadDetatilPageInitialData } from '../redux/actions/initialData';
 
 
-const mapStateToProps = (state) => {
-    console.log(state)
-    
+const mapStateToProps = (state) => {    
     return ({
         activeUser: getActiveUser(state),
         users: getUsers(state),

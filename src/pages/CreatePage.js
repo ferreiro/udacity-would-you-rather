@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import {isEmpty} from 'lodash';
 // import PropTypes from 'prop-types';
 
 import './CreatePage.scss';
@@ -6,8 +7,8 @@ import './CreatePage.scss';
 export class CreatePage extends PureComponent {
 
     state = {
-        optionAText: '',
-        optionBText: '',
+        optionOneText: '',
+        optionTwoText: '',
     }
 
     static propTypes = {
@@ -19,22 +20,34 @@ export class CreatePage extends PureComponent {
     }
 
     onSubmitForm = (event) => {
+        event.preventDefault();
+
         console.log('On submit form')
         console.log(event)
+
+        const {optionOneText, optionTwoText} = this.state;
+
+        if (isEmpty(optionOneText) || isEmpty(optionTwoText)) {
+            return window.alert('You must fill both possible answers')
+        }
+
+        const {submitQuestion, activeUserId} = this.props;
+
+        submitQuestion({optionOneText, optionTwoText, author: activeUserId})
     }
 
-    onChangeOptionA = (event) => {
-        this.setState({optionAText: event.target.value})
+    onChangeOptionOne = (event) => {
+        this.setState({optionOneText: event.target.value})
     }
 
-    onChangeOptionB = (event) => {
-        this.setState({optionBText: event.target.value})
+    onChangeOptionTwo = (event) => {
+        this.setState({optionTwoText: event.target.value})
     }
 
     render() {
         const {
-            optionAText,
-            optionBText,
+            optionOneText,
+            optionTwoText,
         } = this.state;
 
         return (
@@ -45,9 +58,25 @@ export class CreatePage extends PureComponent {
                     onSubmit={this.onSubmitForm}
                     className="question-create__wrapper"
                 >
-                    <input type="text" value={optionAText} onChange={this.onChangeOptionA} placeholder="Option a" />
-                    <input type="text" value={optionBText} onChange={this.onChangeOptionB} placeholder="Option b" />
-                    <input type="submit" value="Submit" onSubmit={this.onSubmitForm} />
+                    <input
+                        type="text"
+                        value={optionOneText}
+                        onChange={this.onChangeOptionOne}
+                        placeholder="Option One"
+                        required
+                    />
+                    <input
+                        type="text"
+                        value={optionTwoText}
+                        onChange={this.onChangeOptionTwo}
+                        placeholder="Option Two"
+                        required
+                    />
+                    <input
+                        type="submit"
+                        value="Submit"
+                        onSubmit={this.onSubmitForm}
+                    />
                 </form>
             </div>
         )

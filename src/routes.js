@@ -1,17 +1,11 @@
 import React, {PureComponent} from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
-import {connect} from 'react-redux';
-import {isEmpty, get} from 'lodash';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
-import {loadUsers} from './redux/actions/users';
-
+import ConnectedCreatePage from './containers/ConnectedCreatePage';
 import ConnectedQuestionListPage from './containers/ConnectedQuestionListPage';
 import ConnectedQuestionDetailPage from './containers/ConnectedQuestionDetailPage';
 
-import {CreatePage} from './pages/CreatePage';
-
 import {Layout} from './components/layout/Layout';
-import { getActiveUser, getUsers } from './redux/selectors/users';
 
 const QuestionsPage = () => (
     <div>Questions page</div>
@@ -84,7 +78,7 @@ export const getRoutes = ({props}) => (
             />
             <Route
                 path="/create"
-                component={withRequiredAuthentication(withLayout(CreatePage))}
+                component={withRequiredAuthentication(withLayout(ConnectedCreatePage))}
             />
             <Route
                 path="/questions/:id"

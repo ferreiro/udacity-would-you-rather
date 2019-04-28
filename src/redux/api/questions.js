@@ -1,5 +1,9 @@
-import { _getQuestions } from "../../_DATA";
+import { _getQuestions, _saveQuestion } from "../../_DATA";
 
-export const fetchQuestions = () => {
-    return _getQuestions()
-}
+export const fetchQuestions = () => (
+    _getQuestions()
+)
+
+export const saveQuestion = (question) => (
+    _saveQuestion(question)
+)
