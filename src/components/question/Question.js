@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import classNames from 'classnames';
 
 import './Question.scss';
-import { tsThisType } from '@babel/types';
 
 export const OPTION_ONE = 'optionOne';
 export const OPTION_TWO = 'optionTwo';

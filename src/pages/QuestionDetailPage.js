@@ -39,11 +39,16 @@ export class QuestionDetailPage extends PureComponent {
         }
     }
 
-    selectQuestion = (event) => {
+    selectQuestion = (answer) => {
+        const {activeUser, submitAnswer} = this.props;
+        const {id: questionId} = this.getQuestion();
+
         console.log('Select question!!!')
-        console.log(event)
-        // If user has already voted... Don't allow to change the vote...
-        // else, dispatch new vote!
+        console.log(answer)
+
+        console.log('Dispatching...')
+
+        submitAnswer(activeUser, questionId, answer)
     }
 
     getUserAnswered = (question, activeUser) => {
@@ -59,6 +64,13 @@ export class QuestionDetailPage extends PureComponent {
         return activeUser.answers[questionId] !== undefined;
     }
 
+    getQuestion() {
+        const {questions} = this.props;  
+        const questionId = get(this.props.match, 'params.id', null);
+
+        return questions[questionId] || null;
+    }
+
     render() {
         if (this.state.isLoading) {
             return <p>Is loading...</p>
@@ -70,10 +82,9 @@ export class QuestionDetailPage extends PureComponent {
             return <p>No message found</p>
         }
         
-        const questionId = get(this.props.match, 'params.id', null);
-        const question = questions[questionId];
+        const question = this.getQuestion();
 
-        if (!questionId || !question) {
+        if (!question) {
             return <Redirect to="/404" />
         }
 
