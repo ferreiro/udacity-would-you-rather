@@ -1,15 +1,18 @@
 import React, {PureComponent} from 'react';
 import {isEmpty} from 'lodash';
+import {Redirect} from 'react-router-dom';
 // import PropTypes from 'prop-types';
 
 import './CreatePage.scss';
 
+const initialFormState = {
+    optionOneText: '',
+    optionTwoText: ''
+}
+
 export class CreatePage extends PureComponent {
 
-    state = {
-        optionOneText: '',
-        optionTwoText: '',
-    }
+    state = initialFormState
 
     static propTypes = {
         
@@ -33,7 +36,13 @@ export class CreatePage extends PureComponent {
 
         const {submitQuestion, activeUserId} = this.props;
 
-        submitQuestion({optionOneText, optionTwoText, author: activeUserId})
+        submitQuestion({optionOneText, optionTwoText, author: activeUserId}).then(() => {
+            // Success! Reset form (we can avoid that...) and redirect home
+            this.setState(initialFormState)
+            this.props.history.push('/')
+        }).catch((error) => (
+            window.alert('Can not save the question', error)
+        ));
     }
 
     onChangeOptionOne = (event) => {
@@ -45,6 +54,7 @@ export class CreatePage extends PureComponent {
     }
 
     render() {
+        const {isLoadingSavingQuestion} = this.props;
         const {
             optionOneText,
             optionTwoText,
@@ -54,30 +64,35 @@ export class CreatePage extends PureComponent {
             <div className="question-create">
                 <h1 className="question-create__title">Create question</h1>
                 <h3 className="question-create__intro">Would you rather...?</h3>
-                <form
-                    onSubmit={this.onSubmitForm}
-                    className="question-create__wrapper"
-                >
-                    <input
-                        type="text"
-                        value={optionOneText}
-                        onChange={this.onChangeOptionOne}
-                        placeholder="Option One"
-                        required
-                    />
-                    <input
-                        type="text"
-                        value={optionTwoText}
-                        onChange={this.onChangeOptionTwo}
-                        placeholder="Option Two"
-                        required
-                    />
-                    <input
-                        type="submit"
-                        value="Submit"
+
+                {isLoadingSavingQuestion === true ? (
+                    <p>Is saving question...</p>
+                ) : (
+                    <form
                         onSubmit={this.onSubmitForm}
-                    />
-                </form>
+                        className="question-create__wrapper"
+                    >
+                        <input
+                            type="text"
+                            value={optionOneText}
+                            onChange={this.onChangeOptionOne}
+                            placeholder="Option One"
+                            required
+                        />
+                        <input
+                            type="text"
+                            value={optionTwoText}
+                            onChange={this.onChangeOptionTwo}
+                            placeholder="Option Two"
+                            required
+                        />
+                        <input
+                            type="submit"
+                            value="Submit"
+                            onSubmit={this.onSubmitForm}
+                        />
+                    </form>
+                )}
             </div>
         )
     }  

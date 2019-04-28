@@ -7,3 +7,7 @@ export const getQuestions = (state = {}) => (
 export const getIsLoadingQuestions = (state) => (
     get(state, 'questions.isLoading', false)
 )
+
+export const getIsLoadingSavingQuestion = (state) => (
+    get(state, 'questions.isLoadingSavingQuestion', false)
+)
