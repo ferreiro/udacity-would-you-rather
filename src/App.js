@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 
 import thunkMiddleware from 'redux-thunk';
 
@@ -8,6 +8,14 @@ import {getRoutes} from './routes';
 import rootReducer from './redux/reducers';
 
 import './App.scss';
+
+const composeEnhancers =
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+    }) : compose;
+
 
 class App extends PureComponent {
   constructor(props) {
@@ -18,7 +26,7 @@ class App extends PureComponent {
     this._store = createStore(
       rootReducer,
       initialState,
-      applyMiddleware(thunkMiddleware)
+      composeEnhancers(applyMiddleware(thunkMiddleware)),
     )
   }
 
