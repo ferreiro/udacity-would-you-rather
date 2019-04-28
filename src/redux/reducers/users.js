@@ -1,10 +1,11 @@
 import {
     LOAD_USERS_REQUEST,
     LOAD_USERS_SUCCESS,
-    LOAD_USERS_FAILURE
+    LOAD_USERS_FAILURE,
 } from '../actions/users';
 import {
-    SAVE_ANSWER
+    SAVE_ANSWER,
+    SUBMIT_QUESTION_SUCCESS
 } from '../actions/questions';
 
 const initialState = {
@@ -21,6 +22,22 @@ export default (state = initialState, {type, payload}) => {
             return {...state, isLoading: false, items: payload} 
         case LOAD_USERS_FAILURE:
             return {...state, isLoading: false, error: payload}
+        case SUBMIT_QUESTION_SUCCESS:
+            const {author, id} = payload;
+
+            // NB: Adding one more question into the user.
+            const copiedUser = state.items[author]
+            copiedUser.questions = [...copiedUser.questions, id]
+
+            return {
+                ...state,
+                ...{
+                    items: {
+                        ...state.items,
+                        ...{[author]: copiedUser}
+                    }
+                }
+            }
         case SAVE_ANSWER:
             const {answer, userId, questionId} = payload;
             const user = state.items[userId]
@@ -36,7 +53,7 @@ export default (state = initialState, {type, payload}) => {
                 ...state,
                 items: {
                     ...state.items,
-                    ...user
+                    ...{[userId]: user}
                 }
             }
         default:

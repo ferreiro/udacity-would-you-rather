@@ -28,14 +28,16 @@ export class LeaderboardPage extends PureComponent {
     getUsersList(users) {
       const usersList = Object.keys(users).map((userKey) => {
         const user = users[userKey]
-
-        return {
+        const updatedUser = {
           ...user,
           ...{points: size(user.answers) + size(user.questions)}
         }
-      })
 
-      
+        console.log('updatedUser')
+        console.log(updatedUser)
+
+        return updatedUser
+      })
 
       return reverse(sortBy(usersList, ['points']))
     }
@@ -51,9 +53,11 @@ export class LeaderboardPage extends PureComponent {
           return <p>No users :)</p>
         }
 
+        console.group('Leaderboard')
+        console.log(users)
         const usersList = this.getUsersList(users)
+        console.groupEnd(usersList)
 
-        console.log(usersList)
 
         return (
             <div>
