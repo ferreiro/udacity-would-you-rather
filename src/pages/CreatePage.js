@@ -24,9 +24,6 @@ export class CreatePage extends PureComponent {
     onSubmitForm = (event) => {
         event.preventDefault();
 
-        console.log('On submit form')
-        console.log(event)
-
         const {optionOneText, optionTwoText} = this.state;
 
         if (isEmpty(optionOneText) || isEmpty(optionTwoText)) {
@@ -89,6 +86,7 @@ export class CreatePage extends PureComponent {
                             type="submit"
                             value="Submit"
                             onSubmit={this.onSubmitForm}
+                            className="question-create__submit"
                         />
                     </form>
                 )}

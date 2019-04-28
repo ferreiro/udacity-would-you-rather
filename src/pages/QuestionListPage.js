@@ -97,10 +97,14 @@ export class QuestionListPage extends PureComponent {
                   </div>
                 )}
 
-                <QuestionList
-                  questions={sortedQuestions}
-                  users={users}
-                />
+                {sortedQuestions.length === 0 ? (
+                  <p>Yay! You have answered all the questions here :)</p>
+                ) : (
+                  <QuestionList
+                    questions={sortedQuestions}
+                    users={users}
+                  />
+                )}
             </div>
         )
     }  

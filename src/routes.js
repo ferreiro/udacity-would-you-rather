@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
+import ConnectedLeaderboardPage from './containers/ConnectedLeaderboardPage';
 import ConnectedCreatePage from './containers/ConnectedCreatePage';
 import ConnectedQuestionListPage from './containers/ConnectedQuestionListPage';
 import ConnectedQuestionDetailPage from './containers/ConnectedQuestionDetailPage';
@@ -9,10 +10,6 @@ import {Layout} from './components/layout/Layout';
 
 const QuestionsPage = () => (
     <div>Questions page</div>
-)
-
-const LeaderboardPage = () => (
-    <div>Leaderboard page</div>
 )
 
 const LoginPage = () => (
@@ -90,7 +87,7 @@ export const getRoutes = ({props}) => (
             />
             <Route
                 path="/leaderboard"
-                component={withRequiredAuthentication(withLayout(LeaderboardPage))}
+                component={withRequiredAuthentication(withLayout(ConnectedLeaderboardPage))}
             />
             <Route
                 path="/login"

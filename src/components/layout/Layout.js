@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 
-import {Header} from '../header/Header';
+import ConnectedHeader from '../../containers/ConnectedHeader';
 
 export class Layout extends PureComponent {
     render() {
@@ -8,7 +8,7 @@ export class Layout extends PureComponent {
 
         return (
             <div className="app">
-                <Header />
+                <ConnectedHeader />
 
                 <div className="container">
                     <div className="container__wrapper">
