@@ -23,8 +23,13 @@ export default (state = initialState, {type, payload}) => {
             return {...state, isLoading: false, error: payload}
         case SAVE_ANSWER:
             const {answer, userId, questionId} = payload;
-
             const user = state.items[userId]
+
+            // NB: Prevent first duplicates or changing votes
+            if (user.answers[questionId] !== undefined) {
+                return state;
+            }
+
             user.answers[questionId] = answer;
 
             return {

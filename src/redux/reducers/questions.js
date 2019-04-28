@@ -1,4 +1,6 @@
 import { SAVE_ANSWER, LOAD_QUESTIONS_REQUEST, LOAD_QUESTIONS_SUCCESS, LOAD_QUESTIONS_FAILURE } from "../actions/questions";
+import { statement } from "@babel/template";
+import { OPTION_ONE, OPTION_TWO } from "../../components/question/Question";
 
 const initialState = {
     isLoading: false,
@@ -16,8 +18,14 @@ export default (state = initialState, {type, payload}) => {
             return {...state, isLoading: false, error: payload};
         case SAVE_ANSWER:
             const {answer, userId, questionId} = payload;
-
             const question = state.items[questionId]
+
+            // NB: Prevent first duplicates or changing votes
+            if (question[OPTION_ONE].votes.includes(userId)
+                || question[OPTION_TWO].votes.includes(userId)) {
+                return state;
+            }
+
             question[answer].votes = [...question[answer].votes, userId]
 
             return {
