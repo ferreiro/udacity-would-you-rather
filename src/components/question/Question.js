@@ -10,6 +10,7 @@ export class Question extends PureComponent {
     handleSubmitResponse = () => {
         const {option, hasAnswered, onSelectQuestion} = this.props;
 
+        // NB: Users can't vote two times
         if (hasAnswered) {
             return;
         }

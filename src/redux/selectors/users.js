@@ -8,7 +8,6 @@ export const getIsLoadingUsers = (state) => (
     get(state, 'users.isLoading', false)
 )
 
-// TODO
 export const getActiveUser = (state) => {
     const {activeUserId} = state;
     const users = getUsers(state)

@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import {isEmpty} from 'lodash';
-// import PropTypes from 'prop-types';
 
 import './CreatePage.scss';
 
@@ -12,14 +11,6 @@ const initialFormState = {
 export class CreatePage extends PureComponent {
 
     state = initialFormState
-
-    static propTypes = {
-        
-    }
-
-    static defaultProps = {
-        
-    }
 
     onSubmitForm = (event) => {
         event.preventDefault();

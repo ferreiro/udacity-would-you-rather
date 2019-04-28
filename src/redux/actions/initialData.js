@@ -1,5 +1,5 @@
-import { loadUsers } from "./users";
-import { loadQuestions } from "./questions";
+import {loadUsers} from "./users";
+import {loadQuestions} from "./questions";
 
 export const loadListPageInitialData = () => (dispatch) => (
     Promise.all([

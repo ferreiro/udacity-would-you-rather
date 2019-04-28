@@ -4,8 +4,6 @@ import {isEmpty, sortBy, reverse} from 'lodash';
 
 import {QuestionList} from '../components/questionsList/QuestionList';
 
-// import Loading from '../public/loading.svg';
-
 export class QuestionListPage extends PureComponent {
     static propTypes = {
         displayAnsweredQuestions: PropTypes.bool.isRequired,
@@ -24,11 +22,7 @@ export class QuestionListPage extends PureComponent {
     componentDidMount() {
       if (isEmpty(this.props.questions) || isEmpty(this.props.users)) {
         this.setState({isLoading: true});
-        this.props.loadInitialData().then(() => {
-
-        }).catch(() => {
-
-        }).finally(() => {
+        this.props.loadInitialData().finally(() => {
             this.setState({isLoading: false})
         })
       } else {

@@ -1,4 +1,4 @@
-import {fetchQuestions, saveQuestion} from '../api/questions';
+import {fetchQuestions, saveQuestion, saveAnswer as saveAnswerAPI} from '../api/questions';
 
 export const LOAD_QUESTIONS_REQUEST = 'questions/load-questions-request';
 export const LOAD_QUESTIONS_SUCCESS = 'questions/load-questions-success';
@@ -45,8 +45,6 @@ const saveQuestionFailure = (error) => ({
     payload: error
 })
 
-// TODO: Use the API that they give us...
-
 export const loadQuestions = () => (dispatch) => {
     dispatch(loadQuestionsRequest)
     
@@ -57,9 +55,10 @@ export const loadQuestions = () => (dispatch) => {
     ))
 }
 
-export const submitAnswer = (user, questionId, answer) => (dispatch) => (
-    dispatch(saveAnswer(user.id, questionId, answer))
-)
+export const submitAnswer = (user, questionId, answer) => (dispatch) => {
+    saveAnswerAPI(user.id, questionId, answer)
+    return dispatch(saveAnswer(user.id, questionId, answer))
+}
 
 export const submitQuestion = ({
     optionOneText,

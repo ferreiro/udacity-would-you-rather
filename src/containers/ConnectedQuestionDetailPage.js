@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 
 import {QuestionDetailPage} from '../pages/QuestionDetailPage';
-import { submitAnswer } from '../redux/actions/questions';
-import { getUsers, getIsLoadingUsers, getActiveUser } from '../redux/selectors/users';
-import { getQuestions, getIsLoadingQuestions } from '../redux/selectors/questions';
-import { loadDetatilPageInitialData } from '../redux/actions/initialData';
+import {submitAnswer} from '../redux/actions/questions';
+import {getUsers, getIsLoadingUsers, getActiveUser} from '../redux/selectors/users';
+import {getQuestions, getIsLoadingQuestions} from '../redux/selectors/questions';
+import {loadDetatilPageInitialData} from '../redux/actions/initialData';
 
 
 const mapStateToProps = (state) => {    

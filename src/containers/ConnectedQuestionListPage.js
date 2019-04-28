@@ -1,11 +1,11 @@
 import {connect} from 'react-redux';
 
 import {QuestionListPage} from '../pages/QuestionListPage';
-import { getDisplayAnsweredQuestions } from '../redux/selectors/settings';
-import { displayAnsweredQuestions, displayUnansweredQuestions } from '../redux/actions/settings';
-import { getUsers, getIsLoadingUsers, getActiveUser } from '../redux/selectors/users';
-import { getQuestions, getIsLoadingQuestions } from '../redux/selectors/questions';
-import { loadListPageInitialData } from '../redux/actions/initialData';
+import {getDisplayAnsweredQuestions} from '../redux/selectors/settings';
+import {displayAnsweredQuestions, displayUnansweredQuestions} from '../redux/actions/settings';
+import {getUsers, getIsLoadingUsers, getActiveUser} from '../redux/selectors/users';
+import {getQuestions, getIsLoadingQuestions} from '../redux/selectors/questions';
+import {loadListPageInitialData} from '../redux/actions/initialData';
 
 const mapStateToProps = (state) => {
     return ({
