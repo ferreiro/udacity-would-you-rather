@@ -1,26 +1,27 @@
 import {connect} from 'react-redux';
 
 import {loadUsers} from '../redux/actions/users';
-import {logoutUser} from '../redux/actions/login';
-import {getActiveUser} from '../redux/selectors/users';
-import {Header} from '../components/header/Header';
+import {loginUser} from '../redux/actions/login';
+import {getUsers} from '../redux/selectors/users';
+import {LoginPage} from '../pages/LoginPage';
 
 const mapStateToProps = (state) => {
     console.log('ConnectedQuestionlistPage');
     console.log(state);
 
     return {
-        user: getActiveUser(state)
+        activeUserId: state.activeUserId,
+        users: getUsers(state)
     }
 }
 
 const mapDispatchToProps = {
     loadUsers,
-    logoutUser,
+    loginUser,
 };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Header)
+)(LoginPage)
 

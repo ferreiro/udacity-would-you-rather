@@ -58,8 +58,15 @@
     }
 
     &__logout {
-        a {
+        a,
+        button {
             color: #fff;
+        }
+
+        button { 
+            font-size: 1em;
+            background: transparent;
+            border: 0;
         }
     }
 }

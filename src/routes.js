@@ -1,19 +1,18 @@
 import React, {PureComponent} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import {get, isEmpty} from 'lodash';
 
+import ConnectedLoginPage from './containers/ConnectedLoginPage';
 import ConnectedLeaderboardPage from './containers/ConnectedLeaderboardPage';
 import ConnectedCreatePage from './containers/ConnectedCreatePage';
 import ConnectedQuestionListPage from './containers/ConnectedQuestionListPage';
 import ConnectedQuestionDetailPage from './containers/ConnectedQuestionDetailPage';
 
 import {Layout} from './components/layout/Layout';
+import {connect} from 'react-redux';
 
 const QuestionsPage = () => (
     <div>Questions page</div>
-)
-
-const LoginPage = () => (
-    <p>Sign in</p>
 )
 
 const LogoutPage = () => (
@@ -27,18 +26,22 @@ const NotFoundPage = () => (
 const withRequiredAuthentication = (WrappedComponent) => {
     class ComponentWithLayout extends PureComponent {
         render() {
-            // const {activeUser} = this.props;
-            // const currentUrl = get(this.props.history, 'location.pathname', '')
+            const {activeUserId} = this.props;
+            const currentUrl = get(this.props.history, 'location.pathname', '')
 
-            // if (!activeUser || isEmpty(activeUser)) {
-            //     return <Redirect to={`/login?redirectTo=${currentUrl}`} />
-            // }
+            console.log('withRequiredAuthentication')
+            console.log('activeUserId')
+            console.log(activeUserId)
+            console.log(this.props)
 
-            // return (
-            //     <WrappedComponent
-            //         {...this.props}
-            //     />
-            // )
+            if (!activeUserId || isEmpty(activeUserId)) {
+                return <Redirect to={{
+                    pathname: `/login`,
+                    state: {
+                        redirectUrl: currentUrl
+                    }
+                }} {...this.props} />
+            }
 
             return (
                 <WrappedComponent
@@ -48,7 +51,16 @@ const withRequiredAuthentication = (WrappedComponent) => {
         }
     }
 
-    return ComponentWithLayout;
+    const mapStateToPros = (state) => ({
+        activeUserId: state.activeUserId
+    })
+
+    const mapDispatchToPros = {}
+
+    return connect(
+        mapStateToPros,
+        mapDispatchToPros
+    )(ComponentWithLayout);
 }
   
 const withLayout = (WrappedComponent) => {
@@ -91,7 +103,7 @@ export const getRoutes = ({props}) => (
             />
             <Route
                 path="/login"
-                component={withLayout(LoginPage)}
+                component={withLayout(ConnectedLoginPage)}
             />
             <Route
                 path="/logout"

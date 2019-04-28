@@ -13,6 +13,10 @@ export class Header extends PureComponent {
     }
   }
 
+  logout = () => {
+    this.props.logoutUser()
+  }
+
   render() {
     const {user} = this.props;
     const {name, avatarURL} = user;
@@ -48,7 +52,7 @@ export class Header extends PureComponent {
   
           <li className="header__logout">
             {isLoggedIn === true ? (
-              <Link to="/logout">(Logout)</Link>
+              <button onClick={this.logout}>(Logout)</button>
             ) : (
               <Link to="/login">(Login)</Link>
             )}
