@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {isEmpty} from 'lodash';
+import {isEmpty, sortBy, reverse} from 'lodash';
 
 import {QuestionList} from '../components/questionsList/QuestionList';
 
@@ -36,10 +36,21 @@ export class QuestionListPage extends PureComponent {
       }
     }
 
-    getQuestionsList = (questions = {}) => (
-        Object.keys(questions).reduce((accum, nextQuestionKey) => (
+    getQuestionsList = (questions = {}, activeUser, displayAnsweredQuestions) => {
+        const questionsList = Object.keys(questions).reduce((accum, nextQuestionKey) => (
             [...accum, questions[nextQuestionKey]]
         ), [])
+
+        const displayableQuestions = displayAnsweredQuestions === true
+            ? this.getAnsweredQuestions(questionsList, activeUser)
+            : this.getUnansweredQuestions(questionsList, activeUser)
+        ;
+
+        return displayableQuestions
+    }
+
+    sortQuestions = (questionsList) => (
+      reverse(sortBy(questionsList, ['timestamp']))
     )
 
     getAnsweredQuestions = (questionsList = [], user = {}) => {
@@ -51,13 +62,10 @@ export class QuestionListPage extends PureComponent {
     }
 
     _handleOnShowUnanswered = () => {
-      console.log('clicked!')
       this.props.onDisplayUnansweredQuestions()
     }
 
     _handleOnShowAnswered = () => {
-      console.log('clicked!')
-
       this.props.onDisplayAnsweredQuestions()
     }
 
@@ -72,10 +80,8 @@ export class QuestionListPage extends PureComponent {
           return <p>Empty</p>
         }
 
-        const questionsList = this.getQuestionsList(questions);
-        const filteredQuestionsList = displayAnsweredQuestions === true
-            ? this.getAnsweredQuestions(questionsList, activeUser)
-            : this.getUnansweredQuestions(questionsList, activeUser)
+        const questionsList = this.getQuestionsList(questions, activeUser, displayAnsweredQuestions)
+        const sortedQuestions = this.sortQuestions(questionsList)
 
         return (
             <div>
@@ -92,7 +98,7 @@ export class QuestionListPage extends PureComponent {
                 )}
 
                 <QuestionList
-                  questions={filteredQuestionsList}
+                  questions={sortedQuestions}
                   users={users}
                 />
             </div>
