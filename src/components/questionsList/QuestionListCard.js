@@ -27,7 +27,7 @@ export class QuestionListCard extends PureComponent {
 
                     <ul className="question-card__options">
                         <li>{question.optionOne.text}</li>
-                        <li>...or...</li>
+                        <li>or</li>
                         <li>{question.optionTwo.text}</li>
                     </ul>
                 </Link>

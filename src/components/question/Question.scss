@@ -1,3 +1,10 @@
+// TODO: This is also used in QuestionListCard.scss
+// Move to a constant file.
+$option-1-color: #ee0021;
+$option-1-color-hover: #780010;
+$option-2-color: #0086e2;
+$option-2-color-hover: #005088;
+
 .question-option {
     height: 100%;
     display: flex;
@@ -13,11 +20,11 @@
 
         .question-option__a,
         .question-option__a:hover {
-            background: #780010 !important;
+            background: $option-1-color-hover !important;
         }
         .question-option__b,
         .question-option__b:hover {
-            background: #005088 !important;
+            background: $option-2-color-hover !important;
         }
     }
 
@@ -34,28 +41,28 @@
 
         .question-option__a,
         .question-option__a:hover {
-            background: #780010 !important;
+            background: $option-1-color-hover !important;
         }
         .question-option__b,
         .question-option__b:hover {
-            background: #005088 !important;
+            background: $option-2-color-hover !important;
         }
     }
 
     &--no-answered {
         .question-option__a {
-            background: #ee0021;
+            background: $option-1-color;
     
             &:hover {
-                background: #780010;
+                background: $option-1-color-hover;
             }
         }
     
         .question-option__b {
-            background: #0086e2;
+            background: $option-2-color;
     
             &:hover {
-                background: #005088;
+                background: $option-2-color-hover;
             }
         }
     }

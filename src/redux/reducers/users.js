@@ -15,20 +15,17 @@ const initialState = {
 
 export default (state = initialState, {type, payload}) => {
     switch (type) {
+        case LOAD_USERS_REQUEST:
+            return {...state, isLoading: true}
+        case LOAD_USERS_SUCCESS:
+            return {...state, isLoading: false, items: payload} 
+        case LOAD_USERS_FAILURE:
+            return {...state, isLoading: false, error: payload}
         case SAVE_ANSWER:
-            const {
-                userId,
-                questionId,
-                answer
-            } = payload;
+            const {answer, userId, questionId} = payload;
 
-            console.log('SAVE_ANSWER')
-
-            let user = state.items[userId]
-            console.log(user)
+            const user = state.items[userId]
             user.answers[questionId] = answer;
-
-            console.log(user)
 
             return {
                 ...state,
@@ -37,12 +34,6 @@ export default (state = initialState, {type, payload}) => {
                     ...user
                 }
             }
-        case LOAD_USERS_REQUEST:
-            return {...state, isLoading: true}
-        case LOAD_USERS_SUCCESS:
-            return {...state, isLoading: false, items: payload} 
-        case LOAD_USERS_FAILURE:
-            return {...state, isLoading: false, error: payload}
         default:
             return state;
     }

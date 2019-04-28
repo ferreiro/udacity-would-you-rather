@@ -43,11 +43,6 @@ export class QuestionDetailPage extends PureComponent {
         const {activeUser, submitAnswer} = this.props;
         const {id: questionId} = this.getQuestion();
 
-        console.log('Select question!!!')
-        console.log(answer)
-
-        console.log('Dispatching...')
-
         submitAnswer(activeUser, questionId, answer)
     }
 

@@ -1,3 +1,8 @@
+// TODO: This is also used in Question.scss
+// Move to a constant file.
+$option-1-color: #ee0021;
+$option-2-color: #0086e2;
+
 .question-card {
     a {
         border: 2px solid #cecece;
@@ -23,9 +28,9 @@
     }
 
     &__title {
-        font-size: 1em;
+        font-size: 1.5em;
         text-align: center;
-        margin-top: 2em;
+        margin-top: 1em;
     }
 
     &__options {
@@ -35,18 +40,28 @@
         padding: 0;
 
         li {
+            font-weight: bold;
+            color: #fff;
             border-radius: 5px;
             flex: 1 1 auto;
             list-style: none;
             text-align: center;
-            padding: 1em;
+            padding: 3em 0.5em;
 
             &:nth-child(1) {
-                background: blue;
+                width: 50%;
+                background: $option-1-color;
+            }
+
+            &:nth-child(2) {
+                color: #000;
+                flex: 0 0 auto;
+                padding: 2em;
             }
 
             &:nth-child(3) {
-                background: red;
+                width: 50%;
+                background: $option-2-color;
             }
         }
     }

@@ -1,4 +1,4 @@
-import { LOAD_QUESTIONS_REQUEST, LOAD_QUESTIONS_SUCCESS, LOAD_QUESTIONS_FAILURE } from "../actions/questions";
+import { SAVE_ANSWER, LOAD_QUESTIONS_REQUEST, LOAD_QUESTIONS_SUCCESS, LOAD_QUESTIONS_FAILURE } from "../actions/questions";
 
 const initialState = {
     isLoading: false,
@@ -14,6 +14,19 @@ export default (state = initialState, {type, payload}) => {
             return {...state, isLoading: false, items: payload};
         case LOAD_QUESTIONS_FAILURE:
             return {...state, isLoading: false, error: payload};
+        case SAVE_ANSWER:
+            const {answer, userId, questionId} = payload;
+
+            const question = state.items[questionId]
+            question[answer].votes = [...question[answer].votes, userId]
+
+            return {
+                ...state,
+                items: {
+                    ...state.items,
+                    ...{questionId: question}
+                }
+            }
         default:
             return state;
     }

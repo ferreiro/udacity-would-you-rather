@@ -66,7 +66,7 @@ export class Question extends PureComponent {
 
                         <span className="question-option__votes">
                             {votes} of {totalVotes} all the votes<br />
-                            <i>({percentage} %)</i>
+                            <i>({parseInt(percentage)} %)</i>
                         </span>
                     </div>
                 )}
