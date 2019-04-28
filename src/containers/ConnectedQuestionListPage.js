@@ -8,9 +8,6 @@ import { getQuestions, getIsLoadingQuestions } from '../redux/selectors/question
 import { loadListPageInitialData } from '../redux/actions/initialData';
 
 const mapStateToProps = (state) => {
-    console.log('ConnectedQuestionlistPage');
-    console.log(state);
-
     return ({
         activeUser: getActiveUser(state),
         users: getUsers(state),

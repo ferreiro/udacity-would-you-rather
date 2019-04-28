@@ -25,11 +25,6 @@ const withRequiredAuthentication = (WrappedComponent) => {
             const {activeUserId} = this.props;
             const currentUrl = get(this.props.history, 'location.pathname', '')
 
-            console.log('withRequiredAuthentication')
-            console.log('activeUserId')
-            console.log(activeUserId)
-            console.log(this.props)
-
             if (!activeUserId || isEmpty(activeUserId)) {
                 return <Redirect to={{
                     pathname: `/login`,

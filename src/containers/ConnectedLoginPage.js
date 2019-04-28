@@ -6,9 +6,6 @@ import {getUsers} from '../redux/selectors/users';
 import {LoginPage} from '../pages/LoginPage';
 
 const mapStateToProps = (state) => {
-    console.log('ConnectedQuestionlistPage');
-    console.log(state);
-
     return {
         activeUserId: state.activeUserId,
         users: getUsers(state)

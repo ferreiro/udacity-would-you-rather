@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
-import {isEmpty, get} from 'lodash';
+import {isEmpty} from 'lodash';
+import {get} from 'lodash';
 
 import './Login.scss';
 
@@ -17,7 +18,7 @@ export class LoginPage extends PureComponent {
         const redirectUrl = get(location, 'state.redirectUrl', '/')
 
         loginUser(user)
-        this.props.history.push(redirectUrl)
+        this.props.history.push(redirectUrl.includes('questions') ? redirectUrl : '/')
     }
  
     render() {
