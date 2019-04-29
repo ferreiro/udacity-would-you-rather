@@ -18,7 +18,7 @@ export class LoginPage extends PureComponent {
         const redirectUrl = get(location, 'state.redirectUrl', '/')
 
         loginUser(user)
-        this.props.history.push(redirectUrl.includes('questions') ? redirectUrl : '/')
+        this.props.history.push(redirectUrl)
     }
  
     render() {
