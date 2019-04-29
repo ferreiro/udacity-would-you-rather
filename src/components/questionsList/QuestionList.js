@@ -7,8 +7,6 @@ import './QuestionList.scss';
 
 export class QuestionList extends PureComponent {
     static propTypes = {
-        showAnsweredQuestions: PropTypes.bool,
-        activeUser: PropTypes.object,
         questions: PropTypes.arrayOf(PropTypes.object),
     }
 
