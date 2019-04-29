@@ -8,7 +8,7 @@ const LeaderboardCard = ({user}) => {
   const createdQuestions = size(user.questions)
 
   return (
-    <li key={user.id} className="leaderboard__item">
+    <li className="leaderboard__item">
       <img src={user.avatarURL} alt="Avatar" />
       <p className="leaderboard__title">{user.name}</p>
 
@@ -31,7 +31,7 @@ const LeaderboardCard = ({user}) => {
 
 const LeaderboardList = ({users}) => (
   <ul className="leaderboard">
-    {users.map((user) => <LeaderboardCard user={user} />)}
+    {users.map((user) => <LeaderboardCard key={user.id} user={user} />)}
   </ul>
 )
 
