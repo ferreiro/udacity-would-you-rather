@@ -27,11 +27,7 @@ export class QuestionDetailPage extends PureComponent {
     componentDidMount() {
         if (isEmpty(this.props.questions) || isEmpty(this.props.users)) {
             this.setState({isLoading: true});
-            this.props.loadInitialData().then(() => {
-
-            })
-            .catch(() => {})
-            .finally(() => {
+            this.props.loadInitialData().finally(() => {
                 this.setState({isLoading: false})
             })
         } else {
