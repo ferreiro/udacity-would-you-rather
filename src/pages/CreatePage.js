@@ -32,12 +32,8 @@ export class CreatePage extends PureComponent {
         ));
     }
 
-    onChangeOptionOne = (event) => {
-        this.setState({optionOneText: event.target.value})
-    }
-
-    onChangeOptionTwo = (event) => {
-        this.setState({optionTwoText: event.target.value})
+    handleOptionChange = (event) => {
+        this.setState({[event.target.name]: event.target.value})
     }
 
     render() {
@@ -62,14 +58,16 @@ export class CreatePage extends PureComponent {
                         <input
                             type="text"
                             value={optionOneText}
-                            onChange={this.onChangeOptionOne}
+                            onChange={this.handleOptionChange}
+                            name="optionOneText"
                             placeholder="Option One"
                             required
                         />
                         <input
                             type="text"
                             value={optionTwoText}
-                            onChange={this.onChangeOptionTwo}
+                            onChange={this.handleOptionChange}
+                            name="optionTwoText"
                             placeholder="Option Two"
                             required
                         />
