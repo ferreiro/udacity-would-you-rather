@@ -48,7 +48,7 @@ export default (state = initialState, {type, payload}) => {
                 ...state,
                 items: {
                     ...state.items,
-                    ...{questionId: question}
+                    ...{[questionId]: question}
                 }
             }
         default:
